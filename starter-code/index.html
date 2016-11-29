@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="hangmanApp">
 
 <head>
   <title>Hangman Game</title>
@@ -12,21 +12,109 @@
 </head>
 
 <body class="full-background">
-<div class='container' id="container" ng-controller="hangmanCtrl">
+<div class='container' id="container" ng-controller="hangmanCtrl as hangmanCtrl">
   <div id='poor-soul' class='row'>
-    <pre class='col-md-6 col-md-offset-3'>
-_________
-|/      |                               _
-|      (_)       __ _ _ __   __ _ _   _| | __ _ _ __
-|      \|/      / _` | '_ \ / _` | | | | |/ _` | '__|
-|       |      | (_| | | | | (_| | |_| | | (_| | |
-|      / \      \__,_|_| |_|\__, |\__,_|_|\__,_|_|
-|                           |___/
-|___                                        hang-man
+    <div ng-if="hangmanCtrl.game.triesRemaining == 7">
+      <pre class='col-md-6 col-md-offset-3'>
+                                             _
+                     __ _ _ __   __ _ _   _| | __ _ _ __
+                    / _` | '_ \ / _` | | | | |/ _` | '__|
+                   | (_| | | | | (_| | |_| | | (_| | |
+                    \__,_|_| |_|\__, |\__,_|_|\__,_|_|
+                                |___/
+                                              hang-man
 
-    </pre>
+      </pre>
+    </div>
+    <div ng-if="hangmanCtrl.game.triesRemaining == 6">
+      <pre class='col-md-6 col-md-offset-3'>
+      _________
+      |/
+      |
+      |
+      |
+      |
+      |
+      |___
+      </pre>
+    </div>
+    <div ng-if="hangmanCtrl.game.triesRemaining == 5">
+      <pre class='col-md-6 col-md-offset-3'>
+      _________
+      |/      |
+      |
+      |
+      |
+      |
+      |
+      |___
+      </pre>
+    </div>
+    <div ng-if="hangmanCtrl.game.triesRemaining == 4">
+      <pre class='col-md-6 col-md-offset-3'>
+      _________
+      |/      |
+      |      (_)
+      |
+      |
+      |
+      |
+      |___
+      </pre>
+    </div>
+    <div ng-if="hangmanCtrl.game.triesRemaining == 3">
+      <pre class='col-md-6 col-md-offset-3'>
+      _________
+      |/      |
+      |      (_)
+      |      \|/
+      |
+      |
+      |
+      |___
+      </pre>
+    </div>
+    <div ng-if="hangmanCtrl.game.triesRemaining == 2">
+      <pre class='col-md-6 col-md-offset-3'>
+      _________
+      |/      |
+      |      (_)
+      |      \|/
+      |       |
+      |
+      |
+      |___
+      </pre>
+    </div>
+    <div ng-if="hangmanCtrl.game.triesRemaining == 1">
+      <pre class='col-md-6 col-md-offset-3'>
+      _________
+      |/      |
+      |      (_)
+      |      \|/
+      |       |
+      |      /
+      |
+      |___
+      </pre>
+    </div>
+    <div ng-if="hangmanCtrl.game.triesRemaining == 0">
+      <pre class='col-md-6 col-md-offset-3'>
+      _________
+      |/      |
+      |      (_)
+      |      \|/
+      |       |
+      |      / \
+      |
+      |___
+      YOU DIE!
+      </pre>
+    </div>
+
+
     <div class='col-sm-12 col-md-6 col-md-offset-3 text-center'>
-      ? tries remaining
+      {{hangmanCtrl.game.triesRemaining}} tries remaining
     </div>
   </div>
   <div class='row'>
@@ -34,15 +122,16 @@ _________
       <span class="label label-default">SOLVING:</span>
     </div>
     <div class='col-sm-12 text-center'>
-      <span class='wide'></span>
+      <span class='wide'>{{hangmanCtrl.game.displayWord}}</span>
     </div>
   </div>
 
   <div class='row'>
     <div class='col-sm-12 text-center'>
-      <span class="label label-default">GUESSES: </span>
+      <span class="label label-default">GUESSES:</span>
     </div>
     <div class='col-sm-12 text-center' id='guesses'>
+      {{hangmanCtrl.game.guesses}}
     </div>
   </div>
 
@@ -51,12 +140,17 @@ _________
       <span class="label label-default">INPUT:</span>
     </div>
     <div class="col-sm-12 text-center">
-      <input type='text' size='1' id='guess'>
+      <input type='text' size='1' id='guess' ng-model="hangmanCtrl.game.input" ng-change="hangmanCtrl.guessLetter()" autofocus>
     </div>
   </div>
   <div class='row' id='statuses'>
     <div class='col-sm-1 table small-font'>Win status:
-      <span class='glyphicon'></span>
+      <div ng-if="hangmanCtrl.game.gameWon == true">
+      <span class='glyphicon glyphicon-ok'></span>
+      </div>
+      <div ng-if="hangmanCtrl.game.gameWon == false">
+      <span class='glyphicon glyphicon-remove'></span>
+      </div>
     </div>
   </div>
 </div>

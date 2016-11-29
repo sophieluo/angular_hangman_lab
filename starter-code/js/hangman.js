@@ -70,11 +70,13 @@ HangmanGame.prototype.checkForWinner = function() {
     console.log("Sorry, you loose.")
     this.gameOver = true;
     this.gameWon = false;
+    location.reload();
   // user wins if there are no more underscores in word
   } else if( !this.isLetterInWord("_", this.displayWord) ) {
     console.log("Yay, you win!")
     this.gameOver = true;
     this.gameWon = true;
+    location.reload();
   }
 };
 
